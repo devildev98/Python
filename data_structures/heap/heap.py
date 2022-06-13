@@ -1,4 +1,6 @@
-from typing import Iterable, List, Optional
+from __future__ import annotations
+
+from typing import Iterable
 
 
 class Heap:
@@ -25,19 +27,19 @@ class Heap:
     """
 
     def __init__(self) -> None:
-        self.h: List[float] = []
+        self.h: list[float] = []
         self.heap_size: int = 0
 
     def __repr__(self) -> str:
         return str(self.h)
 
-    def parent_index(self, child_idx: int) -> Optional[int]:
-        """ return the parent index of given child """
+    def parent_index(self, child_idx: int) -> int | None:
+        """return the parent index of given child"""
         if child_idx > 0:
             return (child_idx - 1) // 2
         return None
 
-    def left_child_idx(self, parent_idx: int) -> Optional[int]:
+    def left_child_idx(self, parent_idx: int) -> int | None:
         """
         return the left child index if the left child exists.
         if not, return None.
@@ -47,7 +49,7 @@ class Heap:
             return left_child_index
         return None
 
-    def right_child_idx(self, parent_idx: int) -> Optional[int]:
+    def right_child_idx(self, parent_idx: int) -> int | None:
         """
         return the right child index if the right child exists.
         if not, return None.
@@ -78,7 +80,7 @@ class Heap:
                 self.max_heapify(violation)
 
     def build_max_heap(self, collection: Iterable[float]) -> None:
-        """ build max heap from an unsorted array"""
+        """build max heap from an unsorted array"""
         self.h = list(collection)
         self.heap_size = len(self.h)
         if self.heap_size > 1:
@@ -87,14 +89,14 @@ class Heap:
                 self.max_heapify(i)
 
     def max(self) -> float:
-        """ return the max in the heap """
+        """return the max in the heap"""
         if self.heap_size >= 1:
             return self.h[0]
         else:
             raise Exception("Empty heap")
 
     def extract_max(self) -> float:
-        """ get and remove max from heap """
+        """get and remove max from heap"""
         if self.heap_size >= 2:
             me = self.h[0]
             self.h[0] = self.h.pop(-1)
@@ -108,7 +110,7 @@ class Heap:
             raise Exception("Empty heap")
 
     def insert(self, value: float) -> None:
-        """ insert a new value into the max heap """
+        """insert a new value into the max heap"""
         self.h.append(value)
         idx = (self.heap_size - 1) // 2
         self.heap_size += 1
