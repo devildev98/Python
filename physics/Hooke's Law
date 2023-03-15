@@ -1,0 +1,32 @@
+def hookes_law(force: float, spring_constant: float, deformation: float) -> dict[str, float]:
+    """
+    Apply Hooke's Law, on any two given physical values, which can be force, spring constant,
+    and deformation, and then in a Python dict return name/value pair of the zero value.
+
+    >>> hookes_law(force=10, spring_constant=5, deformation=0)
+    {'deformation': 2.0}
+    >>> hookes_law(force=0, deformation=0, spring_constant=10)
+    Traceback (most recent call last):
+      ...
+    ValueError: One and only one argument must be 0
+    >>> hookes_law(force=0, deformation=1, spring_constant=-2)
+    Traceback (most recent call last):
+      ...
+    ValueError: Spring constant cannot be negative
+    >>> hookes_law(spring_constant=0, force=-10, deformation=1)
+    {'spring_constant': -10.0}
+    >>> hookes_law(force=0, deformation=-1.5, spring_constant=2)
+    {'force': -3.0}
+    """
+    if (force, spring_constant, deformation).count(0) != 1:
+        raise ValueError("One and only one argument must be 0")
+    if spring_constant < 0:
+        raise ValueError("Spring constant cannot be negative")
+    if force == 0:
+        return {"force": float(spring_constant * deformation)}
+    elif deformation == 0:
+        return {"deformation": force / spring_constant}
+    elif spring_constant == 0:
+        return {"spring_constant": force / deformation}
+    else:
+        raise ValueError("Exactly one argument must be 0")
